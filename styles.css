@@ -1,0 +1,16 @@
+.textDiv{
+    height: 150px;
+    width: 150px;
+    background-color: rgb(147, 138, 148);
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    
+}
+#headline{
+    text-decoration: underline;
+}
+html{
+    font-family: sans-serif;
+}
+
