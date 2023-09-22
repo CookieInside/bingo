@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title >BINGO Admin Panel</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <script>
+        let id;
+        let waiting = true;
+
+        function setID(){
+            id = document.getElementById("gameID").value;
+            sendValues("/init-game", id);
+            document.getElementById("gameID").style.visibility = "hidden";
+            document.getElementById("submitID").style.visibility = "hidden";
+            document.getElementById("submitID").innerHTML = "Configuring game "
+            clock();
+        }
+
+        async function clock(){
+            while(waiting){
+                updateWords();
+                updatePlayers();
+                updateSuggestions();
+                await new Promise(r => setTimeout(r, 1000));
+            }
+        }
+
+        function updateSuggestions(){
+            console.log(getListFromBackend("suggestions"));
+            document.getElementById("suggestionlist").innerHTML = tableRowGenerator(getListFromBackend("suggestions"))
+        }
+
+        function updatePlayers(){
+            console.log(getListFromBackend("players"));
+            document.getElementById("playerlist").innerHTML = tableRowGenerator(getListFromBackend("players"))
+        }
+
+        function updateWords(){
+            console.log(getListFromBackend("words"));
+            document.getElementById("wordlist").innerHTML = tableRowGenerator(getListFromBackend("words"))
+        }
+
+        function getListFromBackend(which) {
+            $.ajax({
+                url: "get-" + which + "/" + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    return(data);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+        function sendValues(where, value){
+            $.ajax({
+                type: "POST",
+                url: where,
+                data: {
+                    value: value
+                },
+                success: function(response){
+                    console.log(response);
+                }
+            });
+        }
+
+        function tableRowGenerator(list){
+            tableHTML = ""
+            for(var i = 0; i < list.length; i++){
+                tableHTML += "<tr><td>" + list[i] + "</td></tr>"
+            }
+            return(tableHTML);
+        }
+    </script>
+    <center>
+        <h1 id="headText">Create new game</h1>
+        <br>
+        <input type="text" placeholder="insert game id" id="gameID"><input type="submit" value="Submit" id="submitID" onclick="setID()">
+        <br><br><br>
+    </center>
+    <table style="border:0px;">
+        <td style="border:0px;">
+            <table>
+                <thead>
+                    <tr><th>Players</th></tr>
+                </thead>
+                <tbody id="playerlist">
+                    <tr><td>playername</td></tr>
+                </tbody>
+            </table>
+        </td>
+        <td style="border:0px;">
+            <table>
+                <thead>
+                    <tr><th>Words</th></tr>
+                </thead>
+                <tbody id="wordlist">
+                    <tr><td>xyz</td></tr>
+                </tbody>
+            </table>
+        </td>
+        <td style="border:0px;">
+            <table>
+                <thead>
+                    <tr><th>Suggestions</th></tr>
+                </thead>
+                <tbody id="suggestionlist">
+                    <tr><td>zyx</td></tr>
+                </tbody>
+            </table>
+        </td>
+    </table>
+</body>
+<script src="{{ url_for('static', filename='js/jquery-360-min.js') }}"></script>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title >game lobby</title>
+    <link rel="stylesheet" type="text/css" href="">
+</head>
+<body>
+    <center>
+        <h1>Select a name and the game you want to join</h1>
+        <br>
+        <input type="text" placeholder="username" id="nameInput">
+        <br>
+        <input type="text" placeholder="insert id" id="idInput"><input type="submit" value="Submit" onclick='window.location.href = "/join/" + document.getElementById("idInput").value + "/" + document.getElementById("nameInput").value'>
+    </center>
+</body>
+<script src="{{ url_for('static', filename='js/jquery-360-min.js') }}"></script>
+</html>
