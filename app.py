@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for
+import json
 
 class Game:
     player_list = []
@@ -84,7 +85,12 @@ def get_suggestions(id):
 @app.route("/get-players/<id>")
 def get_players(id):
     print(get_game(id).get_players())
-    return jsonify(get_game(id).get_players())
+    return json.dumps(get_game(id).get_players())
+
+@app.route("/use-suggestion/<id>/<index>")
+def use_suggestion(id, index):
+    get_game(id).add_word(int(index))
+    return jsonify({"result" : "word added"})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

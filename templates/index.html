@@ -5,6 +5,10 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
+    <script>
+        const name = "{{ data[0] }}";
+        const game = "{{ data[1] }}";
+    </script>
     <center>
         <h2 id="headline">Custom Bingo</h2>
         <table>

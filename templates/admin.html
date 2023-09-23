@@ -18,37 +18,44 @@
             clock();
         }
 
+        function addSuggestion(index){
+            fetch("/use-suggestion/" + id + "/" + index);
+        }
+
         async function clock(){
             while(waiting){
-                updateWords();
-                updatePlayers();
-                updateSuggestions();
-                await new Promise(r => setTimeout(r, 1000));
+                await updateWords();
+                await updatePlayers();
+                await updateSuggestions();
+                await new Promise(r => setTimeout(r, 200));
             }
         }
 
-        function updateSuggestions(){
-            console.log(getListFromBackend("suggestions"));
-            document.getElementById("suggestionlist").innerHTML = tableRowGenerator(getListFromBackend("suggestions"))
+        async function updateSuggestions(){
+            getListFromBackend("suggestions", function(data){
+                document.getElementById("suggestionlist").innerHTML = tableRowGenerator(data, true)
+            })
         }
 
-        function updatePlayers(){
-            console.log(getListFromBackend("players"));
-            document.getElementById("playerlist").innerHTML = tableRowGenerator(getListFromBackend("players"))
+        async function updatePlayers(){
+            getListFromBackend("players", function(data){
+                document.getElementById("playerlist").innerHTML = tableRowGenerator(data)
+            })
         }
 
-        function updateWords(){
-            console.log(getListFromBackend("words"));
-            document.getElementById("wordlist").innerHTML = tableRowGenerator(getListFromBackend("words"))
+        async function updateWords(){
+            getListFromBackend("words", function(data){
+                document.getElementById("wordlist").innerHTML = tableRowGenerator(data)
+            })
         }
 
-        function getListFromBackend(which) {
+        function getListFromBackend(which, callback) {
             $.ajax({
                 url: "get-" + which + "/" + id,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    return(data);
+                    callback(data);
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -69,10 +76,14 @@
             });
         }
 
-        function tableRowGenerator(list){
+        function tableRowGenerator(list, is_suggestion){
             tableHTML = ""
             for(var i = 0; i < list.length; i++){
-                tableHTML += "<tr><td>" + list[i] + "</td></tr>"
+                tableHTML += "<tr><td>" + list[i];
+                if(is_suggestion){
+                    tableHTML += '<i onclick="addSuggestion(' + i +')">\u2705</i>'
+                }
+                tableHTML += "</td></tr>"
             }
             return(tableHTML);
         }

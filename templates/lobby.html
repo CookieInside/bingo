@@ -6,8 +6,8 @@
 </head>
 <body>
     <script>
-        let name = "{{ data[0] }}";
-        let game = "{{ data[1] }}";
+        const name = "{{ data[0] }}";
+        const game = "{{ data[1] }}";
         function sendValues(where, value){
             $.ajax({
                 type: "POST",
