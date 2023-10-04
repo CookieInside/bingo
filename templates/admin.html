@@ -22,6 +22,10 @@
             fetch("/use-suggestion/" + id + "/" + index);
         }
 
+        function startGame(){
+            fetch("/start-game/" + id);
+        }
+
         async function clock(){
             while(waiting){
                 await updateWords();
@@ -93,6 +97,7 @@
         <br>
         <input type="text" placeholder="insert game id" id="gameID"><input type="submit" value="Submit" id="submitID" onclick="setID()">
         <br><br><br>
+        <button id ="start" onclick="startGame()">Start the game</button>
     </center>
     <table style="border:0px;">
         <td style="border:0px;">

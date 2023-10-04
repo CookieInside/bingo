@@ -92,5 +92,11 @@ def use_suggestion(id, index):
     get_game(id).add_word(int(index))
     return jsonify({"result" : "word added"})
 
+@app.route("/start-game/<id>")
+def use_suggestion(id):
+    get_game(id).add_word(int(index))
+    return jsonify({"result" : "status updated"})
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
