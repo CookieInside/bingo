@@ -6,12 +6,14 @@ class Game:
     id = ""
     word_list = []
     suggestion_list = []
+    status_started = False
 
     def __init__(self, pId):
         self.id = pId
 
     def start(self):
-        return ""
+        status_started = True
+        return "success"
     
     def add_word(self, idx):
         if self.suggestion_list[idx] not in self.word_list:
@@ -36,6 +38,9 @@ class Game:
 
     def get_id(self):
         return self.id
+    
+    def get_status(self):
+        return self.status_started
 
 app = Flask(__name__)
 game_list = []
@@ -96,6 +101,10 @@ def use_suggestion(id, index):
 def start_game(id):
     get_game(id).start()
     return jsonify({"result" : "status updated"})
+
+@app.route("/status/<id>")
+def get_status(id):
+    return json.dumps(get_game(id).get_status())
 
 
 if __name__ == "__main__":

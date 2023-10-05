@@ -8,6 +8,28 @@
     <script>
         const name = "{{ data[0] }}";
         const game = "{{ data[1] }}";
+        
+        async function clock(){
+            while(waiting){
+                await getStatus();
+                await new Promise(r => setTimeout(r, 200));
+            }
+        }
+        
+        function getStatus(){
+            $.ajax({
+                url: "status/" + game,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    callback(data);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
         function sendValues(where, value){
             $.ajax({
                 type: "POST",
@@ -22,7 +44,7 @@
         }
     </script>
     <center>
-        <h1>Welcome to the lobby {{ data[0] }}, suggest some words</h1>
+        <h1>Welcome to lobby {{ data[0] }}, suggest some words</h1>
         <br>
         <input type="text" placeholder="insert word" id="wordInput"><input type="submit" value="Submit" onclick='sendValues("/suggest-word/" + game, document.getElementById("wordInput").value)'>
     </center>
