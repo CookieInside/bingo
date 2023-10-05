@@ -93,8 +93,8 @@ def use_suggestion(id, index):
     return jsonify({"result" : "word added"})
 
 @app.route("/start-game/<id>")
-def use_suggestion(id):
-    get_game(id).add_word(int(index))
+def start_game(id):
+    get_game(id).start()
     return jsonify({"result" : "status updated"})
 
 

@@ -8,6 +8,31 @@
     <script>
         const name = "{{ data[0] }}";
         const game = "{{ data[1] }}";
+        
+        let ready = false;
+
+        function select(index){
+            if(ready){
+                const fields = document.getElementsByClassName("textDiv");
+                if(!selected[index]){
+                    fields[index].style["background-color"] = "rgb(23, 212, 54)";
+                }else{
+                    fields[index].style["background-color"] = "rgb(147, 138, 148)";
+                }
+                selected[index] = !selected[index];
+                if(checkWin() == true){
+                    alert("You Won!");
+                }
+            }
+        }
+
+        function generate_options(options){
+            let out = "<option>SELECT A VALUE</option>"
+            for(let i = 0; i < options.length; i++){
+                out += "<option>" + options[i] + "</option>";
+            }
+        }
+
     </script>
     <center>
         <h2 id="headline">Custom Bingo</h2>
