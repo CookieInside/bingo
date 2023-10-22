@@ -9,16 +9,28 @@
         const name = "{{ data[0] }}";
         const game = "{{ data[1] }}";
         
+        clock();
+
         async function clock(){
-            while(waiting){
-                await getStatus();
-                await new Promise(r => setTimeout(r, 200));
+            while(true){
+                console.log("test");
+                await switchPage();
+                await new Promise(r => setTimeout(r, 20));
             }
         }
+
+        async function switchPage(){
+            getStatus(function(data){
+                console.log("Status callback: " + data);
+                if(data){
+                    window.location.href = "/game/" + game + "/" + name;
+                }
+            })
+        }
         
-        function getStatus(){
+        function getStatus(callback){
             $.ajax({
-                url: "status/" + game,
+                url: "../../status/" + game,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {

@@ -12,7 +12,7 @@ class Game:
         self.id = pId
 
     def start(self):
-        status_started = True
+        self.status_started = True
         return "success"
     
     def add_word(self, idx):
@@ -53,6 +53,10 @@ def get_game(id):
 @app.route("/")
 def landing():
     return render_template("landing.html")
+
+@app.route("/game/<id>/<name>")
+def game(name, id):
+    return render_template("index.html", data=[name, id])
 
 @app.route("/create")
 def create_game():
@@ -100,6 +104,8 @@ def use_suggestion(id, index):
 @app.route("/start-game/<id>")
 def start_game(id):
     get_game(id).start()
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    print(get_game(id).get_id() + " <- ID | STATUS -> " + str(get_game(id).get_status()))
     return jsonify({"result" : "status updated"})
 
 @app.route("/status/<id>")
