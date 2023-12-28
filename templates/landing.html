@@ -2,16 +2,23 @@
 <html>
 <head>
     <title >game lobby</title>
-    <link rel="stylesheet" type="text/css" href="">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/landing.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    <center>
-        <h1>Select a name and the game you want to join</h1>
-        <br>
-        <input type="text" placeholder="username" id="nameInput">
-        <br>
-        <input type="text" placeholder="insert id" id="idInput"><input type="submit" value="Submit" onclick='window.location.href = "/join/" + document.getElementById("idInput").value + "/" + document.getElementById("nameInput").value'>
-    </center>
+    <div class="wrapper">
+        <form action="">
+            <h1>Join a game</h1>
+            <div class="input-box">
+                <input type="text" placeholder="username" id="nameInput" required>
+            </div>
+            <div class="input-box">
+                <input type="text" placeholder="insert id" id="idInput" required>
+            </div>
+            <button class="btn" type="submit" value="Submit" onclick='window.location.href = "/join/" + document.getElementById("idInput").value + "/" + document.getElementById("nameInput").value'>Submit</button>
+        </form>
+    </div>
+    <a href="https://pixabay.com/users/tommyvideo-3092371/" target="_blank">Background image: tommyvideo</a>
 </body>
 <script src="{{ url_for('static', filename='js/jquery-360-min.js') }}"></script>
 </html>
