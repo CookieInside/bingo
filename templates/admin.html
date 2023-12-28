@@ -92,7 +92,20 @@
             return(tableHTML);
         }
     </script>
-    <center>
+    <div class="wrapper">
+        <form action="">
+            <h1>Create a Lobby</h1>
+            <div class="input-box">
+                <input type="text" placeholder="game id" id="gameID" required>
+            </div>
+            <button class="btn" type="submit" id="submitID" onclick="setID()">Open Lobby</button>
+            <br>
+            <button class="btn" type="submit" id="start" onclick="startGame()">Start Game</button>
+        </form>
+    </div>
+    <a href="https://pixabay.com/users/tommyvideo-3092371/" target="_blank">Background image: tommyvideo</a>
+
+<!--    <center>
         <h1 id="headText">Create new game</h1>
         <br>
         <input type="text" placeholder="insert game id" id="gameID"><input type="submit" value="Submit" id="submitID" onclick="setID()">
@@ -131,6 +144,7 @@
             </table>
         </td>
     </table>
+-->
 </body>
 <script src="{{ url_for('static', filename='js/jquery-360-min.js') }}"></script>
 </html>
